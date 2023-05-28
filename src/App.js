@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { IconCalculator, IconBackspace } from "@tabler/icons-react";
 import "./App.css";
 
-const baseURL = "http://127.0.0.1:3000";
+const baseURL = "https://api-calculadora-u5hq.onrender.com";
 
 const inputPanel = [7, 8, 9, 4, 5, 6, 1, 2, 3, ".", 0, "back"];
 const inputOperators = ["+", "-", "*", "/", "="];
