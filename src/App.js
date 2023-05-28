@@ -1,24 +1,24 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { IconCalculator, IconBackspace } from '@tabler/icons-react';
-import './App.css';
+import { useState } from "react";
+import { useEffect } from "react";
+import { IconCalculator, IconBackspace } from "@tabler/icons-react";
+import "./App.css";
 
-const baseURL = 'http://127.0.0.1:3001';
+const baseURL = "http://127.0.0.1:3000";
 
-const inputPanel = [7, 8, 9, 4, 5, 6, 1, 2, 3, '.', 0, 'back'];
-const inputOperators = ['+', '-', '*', '/', '='];
-const displayText = '';
+const inputPanel = [7, 8, 9, 4, 5, 6, 1, 2, 3, ".", 0, "back"];
+const inputOperators = ["+", "-", "*", "/", "="];
+const displayText = "";
 const memoryData = [];
 const data = [];
 const storage = {};
 const indexList = -1;
 const toggler = false;
-const memoryFunctions = ['ME', 'SV', 'DE', 'CE'];
+const memoryFunctions = ["ME", "SV", "DE", "CE"];
 
 function Title() {
   return (
-    <div className='header m-3'>
-      <h1 className='header__title text-center'>
+    <div className="header m-3">
+      <h1 className="header__title text-center">
         <IconCalculator size={40} />
         Calculadora
       </h1>
@@ -28,17 +28,17 @@ function Title() {
 
 function Display({ dataValue, display }) {
   return (
-    <div className='display row m-3 p-2 rounded'>
-      <div className='display__history col-12 text-end'>{dataValue}</div>
-      <div className='display__input col-12 text-end'>{display}</div>
+    <div className="display row m-3 p-2 rounded">
+      <div className="display__history col-12 text-end">{dataValue}</div>
+      <div className="display__input col-12 text-end">{display}</div>
     </div>
   );
 }
 
 function MemoryControls({ memory, dataIndex, memoryEvents }) {
   return (
-    <div className='memory row m-3'>
-      <span className='memory__info col-12 text-end'>
+    <div className="memory row m-3">
+      <span className="memory__info col-12 text-end">
         Items Saveds: {memory.length} Position: {dataIndex + 1}
       </span>
       <Memory memoryEvents={memoryEvents} />
@@ -48,11 +48,11 @@ function MemoryControls({ memory, dataIndex, memoryEvents }) {
 
 function ControlPanel({ printNumber, operations }) {
   return (
-    <div className='panel m-3'>
-      <div className='panel__numbers col-8'>
+    <div className="panel m-3">
+      <div className="panel__numbers col-8">
         <Buttons printNumber={printNumber} />
       </div>
-      <div className='panel__operations col-4'>
+      <div className="panel__operations col-4">
         <Operators operations={operations} />
       </div>
     </div>
@@ -63,12 +63,12 @@ function Buttons({ printNumber }) {
   return inputPanel.map(function (elemento) {
     return (
       <button
-        className='panel__numbers__button rounded col-4'
+        className="panel__numbers__button rounded col-4"
         onClick={printNumber}
         key={elemento}
         id={elemento}
       >
-        {elemento === 'back' ? <IconBackspace size={30} /> : elemento}
+        {elemento === "back" ? <IconBackspace size={30} /> : elemento}
       </button>
     );
   });
@@ -77,7 +77,7 @@ function Operators({ operations }) {
   return inputOperators.map(function (elemento) {
     return (
       <button
-        className='panel__operations__button rounded col-6'
+        className="panel__operations__button rounded col-6"
         onClick={operations}
         key={elemento}
       >
@@ -91,7 +91,7 @@ function Memory({ memoryEvents }) {
   return memoryFunctions.map(function (elemento) {
     return (
       <button
-        className='col memory__button rounded'
+        className="col memory__button rounded"
         onClick={memoryEvents}
         key={elemento}
       >
@@ -128,17 +128,17 @@ function App() {
 
   function printNumber(event) {
     const pressedButton = event.target.id;
-    if (pressedButton === '') {
+    if (pressedButton === "") {
       const text = display.toString();
       setDisplay(text.slice(0, -1));
     } else {
-      if (pressedButton === '.' && !display) {
-        setDisplay(display + '0.');
+      if (pressedButton === "." && !display) {
+        setDisplay(display + "0.");
       } else {
-        if (pressedButton === '.' && display.includes('.') === false) {
-          setDisplay(display + '.');
+        if (pressedButton === "." && display.includes(".") === false) {
+          setDisplay(display + ".");
         } else {
-          if (pressedButton !== '.') {
+          if (pressedButton !== ".") {
             setDisplay(display + pressedButton);
           }
         }
@@ -148,13 +148,13 @@ function App() {
 
   function operations(event) {
     const sign = event.target.innerText;
-    if (sign !== '=' && display) {
+    if (sign !== "=" && display) {
       const newArray = togg ? [sign] : [display, sign];
       newArray.map((elem) => dataValue.push(elem));
-      setDisplay('');
+      setDisplay("");
       setTogg(false);
     } else {
-      if (sign === '=' && display) {
+      if (sign === "=" && display) {
         setDataValue(dataValue.push(display));
         equal(dataValue);
       }
@@ -162,15 +162,15 @@ function App() {
   }
 
   function evaluaArimetica(fn) {
-    return new Function('return ' + fn)();
+    return new Function("return " + fn)();
   }
 
   function equal(array) {
     let process = array;
     while (process.length >= 3) {
-      if (process[1] === '/' && process[2] === '0') {
+      if (process[1] === "/" && process[2] === "0") {
         window.alert(`${process[0]} no se puede dividir entre 0`);
-        process = [''];
+        process = [""];
       } else {
         const firstOperation = process[0] + process[1] + process[2];
         const operationResult = evaluaArimetica(firstOperation).toFixed(1);
@@ -191,14 +191,14 @@ function App() {
 
   function memoryEvents(event) {
     const request = event.target.textContent;
-    if (request === 'CE') clear(event);
-    if (request === 'SV') save(event);
-    if (request === 'ME') dataSave(event);
-    if (request === 'DE') deleteData(event);
+    if (request === "CE") clear(event);
+    if (request === "SV") save(event);
+    if (request === "ME") dataSave(event);
+    if (request === "DE") deleteData(event);
   }
 
   function clear(event) {
-    setDisplay('');
+    setDisplay("");
     setDataValue([]);
     setTogg(false);
   }
@@ -206,9 +206,9 @@ function App() {
   async function save(event) {
     try {
       const response = await fetch(`${baseURL}/memory`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(storageData),
       });
@@ -246,13 +246,13 @@ function App() {
       const id = memory[dataIndex].id;
       try {
         const response = await fetch(`${baseURL}/memory/${id}`, {
-          method: 'DELETE',
+          method: "DELETE",
         });
 
         if (response.ok) {
           loadMemory();
           setDataIndex(-1);
-          setDisplay('');
+          setDisplay("");
           setDataValue([]);
         }
       } catch (error) {
@@ -263,7 +263,7 @@ function App() {
   }
 
   return (
-    <div className='container p-1 mt-3'>
+    <div className="container p-1 mt-3">
       <Title />
       <Display dataValue={dataValue} display={display} />
       <MemoryControls
